@@ -238,4 +238,14 @@ class ViewTicket extends ViewRecord implements HasForms
         $this->form->fill();
         $this->selectedCommentId = null;
     }
+
+    /**
+     * Overrides the getFormStatePath method to set its access level to public.
+     *
+     * @return string
+     */
+    public function getFormStatePath(): string
+    {
+        return 'form';
+    }
 }
