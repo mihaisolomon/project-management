@@ -81,11 +81,13 @@ class WeeklyReport extends BarChartWidget
 
     protected function filter(User $user, array $params)
     {
+        $weekEndDate = Carbon::parse($params['weekEndDate'])->addDays(1)->format('Y-m-d');
+
         return TicketHour::select([
             DB::raw("DATE_FORMAT(created_at,'%Y-%m-%d') as day"),
             DB::raw('SUM(value) as value'),
         ])
-            ->whereBetween('created_at', [$params['weekStartDate'], $params['weekEndDate']])
+            ->whereBetween('created_at', [$params['weekStartDate'], $weekEndDate])
             ->whereRaw(
                 DB::raw("YEAR(created_at)=" . (is_null($params['year']) ? Carbon::now()->format('Y') : $params['year']))
             )
