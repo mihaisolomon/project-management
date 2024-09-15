@@ -124,7 +124,7 @@ class WeeklyReport extends BarChartWidget
 
         for ($weeks = []; $dtStart <= $dtEnd; $dtStart->modify('+1 week')) {
             $from = $dtStart->format('Y-m-d');
-            $to = (clone $dtStart)->modify('+7 Days')->format('Y-m-d');
+            $to = (clone $dtStart)->modify('+6 Days')->format('Y-m-d');
             $weeks[$from . ' - ' . $to] = $from . ' - ' . $to;
         }
 
