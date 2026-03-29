@@ -4,9 +4,9 @@ namespace App\Filament\Widgets;
 
 use App\Models\Ticket;
 use App\Models\User;
-use Filament\Widgets\BarChartWidget;
+use Filament\Widgets\ChartWidget;
 
-class UserTimeLogged extends BarChartWidget
+class UserTimeLogged extends ChartWidget
 {
     protected static ?string $heading = 'Chart';
     protected static ?int $sort = 5;
@@ -22,12 +22,17 @@ class UserTimeLogged extends BarChartWidget
         return auth()->user()->can('List tickets');
     }
 
-    protected function getHeading(): string
+    public function getHeading(): string
     {
         return __('Time logged by users');
     }
 
-    protected function getData(): array
+    public function getType(): string
+    {
+        return 'bar';
+    }
+
+    public function getData(): array
     {
         $query = User::query();
         $query->has('hours');

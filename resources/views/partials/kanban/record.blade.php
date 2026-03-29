@@ -8,7 +8,7 @@
                 {{ $record['project']->name }}
             </span>
         @endif
-        <a href="{{ route('filament.resources.tickets.view', $record['id']) }}"
+        <a href="{{ route('filament.admin.resources.tickets.view', $record['id']) }}"
            target="_blank"
            class="record-title">
             <span class="code">{{ $record['code'] }}</span>
@@ -39,7 +39,7 @@
                         {{ __(config('system.tickets.relations.list.' . $relation->type)) }}
                     </span>
                     <a target="_blank" class="relation"
-                        href="{{ route('filament.resources.tickets.share', $relation->relation->code) }}">
+                        href="{{ route('filament.admin.resources.tickets.share', $relation->relation->code) }}">
                         {{ $relation->relation->code }}
                     </a>
                 </div>

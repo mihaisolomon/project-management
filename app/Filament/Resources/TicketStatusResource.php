@@ -6,9 +6,9 @@ use App\Filament\Resources\TicketStatusResource\Pages;
 use App\Filament\Resources\TicketStatusResource\RelationManagers;
 use App\Models\TicketStatus;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class TicketStatusResource extends Resource
@@ -19,7 +19,7 @@ class TicketStatusResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Ticket statuses');
     }
@@ -29,7 +29,7 @@ class TicketStatusResource extends Resource
         return static::getNavigationLabel();
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Referential');
     }
@@ -38,7 +38,7 @@ class TicketStatusResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Grid::make()
                             ->schema([

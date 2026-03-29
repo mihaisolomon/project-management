@@ -4,10 +4,10 @@ namespace App\Filament\Pages;
 
 use App\Helpers\KanbanScrumHelper;
 use App\Models\Project;
-use Filament\Facades\Filament;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Pages\Actions\Action;
+use Filament\Notifications\Notification;
+use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -15,7 +15,7 @@ class Scrum extends Page implements HasForms
 {
     use InteractsWithForms, KanbanScrumHelper;
 
-    protected static ?string $navigationIcon = 'heroicon-o-view-boards';
+    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
 
     protected static ?string $slug = 'scrum/{project}';
 
@@ -32,7 +32,7 @@ class Scrum extends Page implements HasForms
     {
         $this->project = $project;
         if ($this->project->type !== 'scrum') {
-            $this->redirect(route('filament.pages.kanban/{project}', ['project' => $project]));
+            $this->redirect(route('filament.admin.pages.kanban/{project}', ['project' => $project]));
         } elseif (
             $this->project->owner_id != auth()->user()->id
             &&
@@ -43,7 +43,7 @@ class Scrum extends Page implements HasForms
         $this->form->fill();
     }
 
-    protected function getActions(): array
+    public function getHeaderActions(): array
     {
         return [
             Action::make('manage-sprints')
@@ -51,31 +51,34 @@ class Scrum extends Page implements HasForms
                 ->visible(fn() => $this->project->currentSprint && auth()->user()->can('update', $this->project))
                 ->label(__('Manage sprints'))
                 ->color('primary')
-                ->url(route('filament.resources.projects.edit', $this->project)),
+                ->url(route('filament.admin.resources.projects.edit', $this->project)),
 
             Action::make('refresh')
                 ->button()
                 ->visible(fn() => $this->project->currentSprint)
                 ->label(__('Refresh'))
-                ->color('secondary')
+                ->color('gray')
                 ->action(function () {
                     $this->getRecords();
-                    Filament::notify('success', __('Kanban board updated'));
+                    Notification::make()
+                        ->success()
+                        ->title(__('Kanban board updated'))
+                        ->send();
                 }),
         ];
     }
 
-    protected function getHeading(): string|Htmlable
+    public function getHeading(): string|Htmlable
     {
         return $this->scrumHeading();
     }
 
-    protected function getSubheading(): string|Htmlable|null
+    public function getSubheading(): string|Htmlable|null
     {
         return $this->scrumSubHeading();
     }
 
-    protected function getFormSchema(): array
+    public function getFormSchema(): array
     {
         return $this->formSchema();
     }

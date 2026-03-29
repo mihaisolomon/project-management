@@ -7,9 +7,9 @@ use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Permission;
 use App\Models\Role;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class RoleResource extends Resource
@@ -20,7 +20,7 @@ class RoleResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Roles');
     }
@@ -30,7 +30,7 @@ class RoleResource extends Resource
         return static::getNavigationLabel();
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Permissions');
     }
@@ -39,7 +39,7 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Grid::make()
                             ->columns(1)
@@ -69,8 +69,9 @@ class RoleResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TagsColumn::make('permissions.name')
+                Tables\Columns\TextColumn::make('permissions.name')
                     ->label(__('Permissions'))
+                    ->badge()
                     ->limit(2),
 
                 Tables\Columns\TextColumn::make('created_at')

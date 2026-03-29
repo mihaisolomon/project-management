@@ -10,20 +10,20 @@ use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class TimesheetResource extends Resource
 {
     protected static ?string $model = TicketHour::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-badge-check';
+    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
 
     protected static ?int $navigationSort = 4;
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Timesheet');
     }
@@ -33,12 +33,12 @@ class TimesheetResource extends Resource
         return static::getNavigationLabel();
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Timesheet');
     }
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->can('List timesheet data');
     }
@@ -47,12 +47,12 @@ class TimesheetResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Select::make('activity_id')
                             ->label(__('Activity'))
                             ->searchable()
-                            ->reactive()
+                            ->live()
                             ->options(function ($get, $set) {
                                 return Activity::all()->pluck('name', 'id')->toArray();
                             }),

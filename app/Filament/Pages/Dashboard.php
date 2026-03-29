@@ -17,12 +17,12 @@ class Dashboard extends BasePage
 {
     protected static bool $shouldRegisterNavigation = false;
 
-    protected function getColumns(): int | array
+    public function getColumns(): int | string | array
     {
         return 6;
     }
 
-    protected function getWidgets(): array
+    public function getWidgets(): array
     {
         return [
             FavoriteProjects::class,

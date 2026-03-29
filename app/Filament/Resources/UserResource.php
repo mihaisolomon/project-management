@@ -6,10 +6,10 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Support\HtmlString;
 
@@ -21,7 +21,7 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Users');
     }
@@ -31,7 +31,7 @@ class UserResource extends Resource
         return static::getNavigationLabel();
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Permissions');
     }
@@ -41,7 +41,7 @@ class UserResource extends Resource
         return $form
             ->schema([
 
-                Forms\Components\Card::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Grid::make()
                             ->schema([
@@ -85,8 +85,9 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TagsColumn::make('roles.name')
+                Tables\Columns\TextColumn::make('roles.name')
                     ->label(__('Roles'))
+                    ->badge()
                     ->limit(2),
 
                 Tables\Columns\TextColumn::make('email_verified_at')

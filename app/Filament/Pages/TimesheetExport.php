@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -23,7 +23,7 @@ class TimesheetExport extends Page implements HasForms
 
     protected static string $view = 'filament.pages.timesheet-export';
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Timesheet');
     }
@@ -33,20 +33,20 @@ class TimesheetExport extends Page implements HasForms
         $this->form->fill();
     }
 
-    protected function getFormSchema(): array
+    public function getFormSchema(): array
     {
         return [
-            Card::make()->schema([
+            Section::make()->schema([
                 Grid::make()
                     ->columns(2)
                     ->schema([
                         DatePicker::make('start_date')
                             ->required()
-                            ->reactive()
+                            ->live()
                             ->label('Star date'),
                         DatePicker::make('end_date')
                             ->required()
-                            ->reactive()
+                            ->live()
                             ->label('End date')
                     ])
             ])

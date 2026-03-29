@@ -10,11 +10,10 @@ use App\Models\ProjectFavorite;
 use App\Models\ProjectStatus;
 use App\Models\Ticket;
 use App\Models\User;
-use Filament\Facades\Filament;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -24,11 +23,11 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive';
+    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?int $navigationSort = 1;
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('Projects');
     }
@@ -38,7 +37,7 @@ class ProjectResource extends Resource
         return static::getNavigationLabel();
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return __('Management');
     }
@@ -47,7 +46,7 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Card::make()
+                Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Grid::make()
                             ->columns(3)
@@ -110,7 +109,7 @@ class ProjectResource extends Resource
                                         'kanban' => __('Kanban'),
                                         'scrum' => __('Scrum')
                                     ])
-                                    ->reactive()
+                                    ->live()
                                     ->default(fn() => 'kanban')
                                     ->helperText(function ($state) {
                                         if ($state === 'kanban') {
@@ -173,19 +172,23 @@ class ProjectResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TagsColumn::make('users.name')
+                Tables\Columns\TextColumn::make('users.name')
                     ->label(__('Affected users'))
+                    ->badge()
                     ->limit(2),
 
-                Tables\Columns\BadgeColumn::make('type')
-                    ->enum([
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
                         'kanban' => __('Kanban'),
-                        'scrum' => __('Scrum')
-                    ])
-                    ->colors([
-                        'secondary' => 'kanban',
-                        'warning' => 'scrum',
-                    ]),
+                        'scrum' => __('Scrum'),
+                        default => $state,
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'kanban' => 'gray',
+                        'scrum' => 'warning',
+                        default => 'gray',
+                    }),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Created at'))
@@ -224,7 +227,10 @@ class ProjectResource extends Resource
                                 'user_id' => auth()->user()->id
                             ]);
                         }
-                        Filament::notify('success', __('Project updated'));
+                        \Filament\Notifications\Notification::make()
+                            ->success()
+                            ->title(__('Project updated'))
+                            ->send();
                     }),
 
                 Tables\Actions\ViewAction::make(),
@@ -233,8 +239,8 @@ class ProjectResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('exportLogHours')
                         ->label(__('Export hours'))
-                        ->icon('heroicon-o-document-download')
-                        ->color('secondary')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('gray')
                         ->action(fn($record) => Excel::download(
                             new ProjectHoursExport($record),
                             'time_' . Str::slug($record->name) . '.csv',
@@ -247,16 +253,16 @@ class ProjectResource extends Resource
                             fn ($record)
                                 => ($record->type === 'scrum' ? __('Scrum board') : __('Kanban board'))
                         )
-                        ->icon('heroicon-o-view-boards')
-                        ->color('secondary')
+                        ->icon('heroicon-o-view-columns')
+                        ->color('gray')
                         ->url(function ($record) {
                             if ($record->type === 'scrum') {
-                                return route('filament.pages.scrum/{project}', ['project' => $record->id]);
+                                return route('filament.admin.pages.scrum/{project}', ['project' => $record->id]);
                             } else {
-                                return route('filament.pages.kanban/{project}', ['project' => $record->id]);
+                                return route('filament.admin.pages.kanban/{project}', ['project' => $record->id]);
                             }
                         }),
-                ])->color('secondary'),
+                ])->color('gray'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
