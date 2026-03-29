@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Pages;
+use BackedEnum;
 
 use App\Models\Epic;
 use App\Models\Project;
@@ -15,9 +16,9 @@ class RoadMap extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-calendar';
 
-    protected static string $view = 'filament.pages.road-map';
+    protected string $view = 'filament.pages.road-map';
 
     protected static ?string $slug = 'road-map';
 

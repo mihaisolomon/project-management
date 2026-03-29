@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Pages;
+use BackedEnum;
 
 use App\Models\Role;
 use App\Settings\GeneralSettings;
@@ -17,7 +18,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class ManageGeneralSettings extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-cog-6-tooth';
 
     protected static string $settings = GeneralSettings::class;
 

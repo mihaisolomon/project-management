@@ -5,7 +5,7 @@ namespace App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -22,7 +22,7 @@ class StatusesRelationManager extends RelationManager
         return $ownerRecord->status_type === 'custom';
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->schema([

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Pages;
+use BackedEnum;
 
 use App\Helpers\KanbanScrumHelper;
 use App\Models\Project;
@@ -15,11 +16,11 @@ class Kanban extends Page implements HasForms
 {
     use InteractsWithForms, KanbanScrumHelper;
 
-    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-view-columns';
 
     protected static ?string $slug = 'kanban/{project}';
 
-    protected static string $view = 'filament.pages.kanban';
+    protected string $view = 'filament.pages.kanban';
 
     protected static bool $shouldRegisterNavigation = false;
 

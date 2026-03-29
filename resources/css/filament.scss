@@ -1,4 +1,6 @@
-@import '../../vendor/filament/filament/resources/css/app.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @import './kanban';
 @import './dialogs';

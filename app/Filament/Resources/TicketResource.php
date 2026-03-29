@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
@@ -13,7 +14,7 @@ use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Resource;
@@ -25,7 +26,7 @@ class TicketResource extends Resource
 {
     protected static ?string $model = Ticket::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-ticket';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-ticket';
 
     protected static ?int $navigationSort = 2;
 
@@ -44,7 +45,7 @@ class TicketResource extends Resource
         return __('Management');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

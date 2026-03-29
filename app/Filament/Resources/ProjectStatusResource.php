@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Filament\Resources\ProjectStatusResource\Pages;
 use App\Filament\Resources\ProjectStatusResource\RelationManagers;
 use App\Models\ProjectStatus;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -15,7 +16,7 @@ class ProjectStatusResource extends Resource
 {
     protected static ?string $model = ProjectStatus::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     protected static ?int $navigationSort = 1;
 
@@ -34,7 +35,7 @@ class ProjectStatusResource extends Resource
         return __('Referential');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Pages;
+use BackedEnum;
 
 use App\Helpers\JiraHelper;
 use App\Jobs\ImportJiraTicketsJob;
@@ -23,9 +24,9 @@ class JiraImport extends Page implements HasForms
 {
     use InteractsWithForms, JiraHelper;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cloud-arrow-down';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-cloud-arrow-down';
 
-    protected static string $view = 'filament.pages.jira-import';
+    protected string $view = 'filament.pages.jira-import';
 
     protected static ?string $slug = 'jira-import';
 

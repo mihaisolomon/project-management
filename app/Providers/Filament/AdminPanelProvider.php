@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->sidebarCollapsibleOnDesktop()
-            ->maxContentWidth(\Filament\Support\Enums\MaxWidth::Full)
+            ->maxContentWidth(\Filament\Support\Enums\Width::Full)
             ->favicon(config('app.logo'))
             ->viteTheme('resources/css/filament.scss')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

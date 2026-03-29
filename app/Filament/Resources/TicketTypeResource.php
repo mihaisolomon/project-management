@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Filament\Resources\TicketTypeResource\Pages;
 use App\Filament\Resources\TicketTypeResource\RelationManagers;
 use App\Models\TicketType;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -17,7 +18,7 @@ class TicketTypeResource extends Resource
 {
     protected static ?string $model = TicketType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     protected static ?int $navigationSort = 1;
 
@@ -36,7 +37,7 @@ class TicketTypeResource extends Resource
         return __('Referential');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

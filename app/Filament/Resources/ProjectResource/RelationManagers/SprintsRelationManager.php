@@ -6,7 +6,7 @@ use App\Models\Sprint;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Actions\Action;
@@ -28,7 +28,7 @@ class SprintsRelationManager extends RelationManager
         return $ownerRecord->type === 'scrum';
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $form): Schema
     {
         return $form
             ->schema([

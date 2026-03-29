@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Exports\ProjectHoursExport;
 use App\Filament\Resources\ProjectResource\Pages;
@@ -11,7 +12,7 @@ use App\Models\ProjectStatus;
 use App\Models\Ticket;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -23,7 +24,7 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-archive-box';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-archive-box';
 
     protected static ?int $navigationSort = 1;
 
@@ -42,7 +43,7 @@ class ProjectResource extends Resource
         return __('Management');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

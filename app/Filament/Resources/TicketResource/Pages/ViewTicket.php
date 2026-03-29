@@ -25,7 +25,7 @@ class ViewTicket extends ViewRecord
 
     protected static string $resource = TicketResource::class;
 
-    protected static string $view = 'filament.resources.tickets.view';
+    protected string $view = 'filament.resources.tickets.view';
 
     public string $tab = 'comments';
 

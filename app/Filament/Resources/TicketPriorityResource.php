@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Filament\Resources\TicketPriorityResource\Pages;
 use App\Filament\Resources\TicketPriorityResource\RelationManagers;
 use App\Models\TicketPriority;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -18,7 +19,7 @@ class TicketPriorityResource extends Resource
 {
     protected static ?string $model = TicketPriority::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-check-badge';
 
     protected static ?int $navigationSort = 4;
 
@@ -37,7 +38,7 @@ class TicketPriorityResource extends Resource
         return __('Referential');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

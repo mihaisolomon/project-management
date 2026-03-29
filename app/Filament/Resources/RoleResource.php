@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Permission;
 use App\Models\Role;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -16,7 +17,7 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-lock-open';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-lock-open';
 
     protected static ?int $navigationSort = 3;
 
@@ -35,7 +36,7 @@ class RoleResource extends Resource
         return __('Permissions');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

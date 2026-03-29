@@ -7,9 +7,9 @@ use Filament\Widgets\ChartWidget;
 
 class TicketTimeLogged extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected ?string $heading = 'Chart';
     protected static ?int $sort = 4;
-    protected static ?string $maxHeight = '300px';
+    protected ?string $maxHeight = '300px';
     protected int|string|array $columnSpan = [
         'sm' => 1,
         'md' => 6,

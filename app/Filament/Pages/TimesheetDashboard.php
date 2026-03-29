@@ -13,7 +13,7 @@ class TimesheetDashboard extends Page
 
     protected static ?int $navigationSort = 2;
 
-    protected static string $view = 'filament::pages.dashboard';
+    protected string $view = 'filament::pages.dashboard';
 
     public function getColumns(): int | array
     {

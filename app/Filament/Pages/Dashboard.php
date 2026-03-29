@@ -17,7 +17,7 @@ class Dashboard extends BasePage
 {
     protected static bool $shouldRegisterNavigation = false;
 
-    public function getColumns(): int | string | array
+    public function getColumns(): int | array
     {
         return 6;
     }

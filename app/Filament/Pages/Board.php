@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Pages;
+use BackedEnum;
 
 use App\Models\Project;
 use Filament\Forms\Components\Section;
@@ -15,9 +16,9 @@ class Board extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static ?string $navigationIcon = 'heroicon-o-view-columns';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-view-columns';
 
-    protected static string $view = 'filament.pages.board';
+    protected string $view = 'filament.pages.board';
 
     protected static ?string $slug = 'board';
 

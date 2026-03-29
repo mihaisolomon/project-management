@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Filament\Resources;
+use BackedEnum;
 
 use App\Filament\Resources\ActivityResource\Pages;
 use App\Filament\Resources\ActivityResource\RelationManagers;
 use App\Models\Activity;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -15,7 +16,7 @@ class ActivityResource extends Resource
 {
     protected static ?string $model = Activity::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-clipboard';
 
     protected static ?int $navigationSort = 1;
 
@@ -34,7 +35,7 @@ class ActivityResource extends Resource
         return __('Referential');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $form): Schema
     {
         return $form
             ->schema([

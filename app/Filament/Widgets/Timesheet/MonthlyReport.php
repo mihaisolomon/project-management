@@ -58,7 +58,7 @@ class MonthlyReport extends ChartWidget
         ];
     }
 
-    protected static ?array $options = [
+    protected ?array $options = [
         'plugins' => [
             'legend' => [
                 'display' => true,
