@@ -7,6 +7,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
@@ -43,9 +44,9 @@ class UserResource extends Resource
         return $form
             ->schema([
 
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->label(__('Full name'))

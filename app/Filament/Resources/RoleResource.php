@@ -8,6 +8,7 @@ use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Permission;
 use App\Models\Role;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -41,9 +42,9 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->columns(1)
                             ->schema([
                                 Forms\Components\TextInput::make('name')

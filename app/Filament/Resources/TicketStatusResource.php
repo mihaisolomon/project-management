@@ -7,6 +7,7 @@ use App\Filament\Resources\TicketStatusResource\Pages;
 use App\Filament\Resources\TicketStatusResource\RelationManagers;
 use App\Models\TicketStatus;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -40,9 +41,9 @@ class TicketStatusResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->label(__('Status name'))

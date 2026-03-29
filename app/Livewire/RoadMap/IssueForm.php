@@ -10,6 +10,7 @@ use App\Models\TicketType;
 use App\Models\User;
 use Closure;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -65,9 +66,9 @@ class IssueForm extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\Grid::make()
+            Schemas\Components\Grid::make()
                 ->schema([
-                    Forms\Components\Grid::make(4)
+                    Schemas\Components\Grid::make(4)
                         ->schema([
                             Forms\Components\Select::make('project_id')
                                 ->label(__('Project'))
@@ -118,7 +119,7 @@ class IssueForm extends Component implements HasForms
                         ->searchable()
                         ->options(fn() => User::all()->pluck('name', 'id')->toArray()),
 
-                    Forms\Components\Grid::make()
+                    Schemas\Components\Grid::make()
                         ->columns(3)
                         ->columnSpan(2)
                         ->schema([
@@ -159,7 +160,7 @@ class IssueForm extends Component implements HasForms
                 ->required()
                 ->columnSpan(2),
 
-            Forms\Components\Grid::make()
+            Schemas\Components\Grid::make()
                 ->columnSpan(2)
                 ->columns(12)
                 ->schema([

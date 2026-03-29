@@ -4,8 +4,8 @@ namespace App\Filament\Pages;
 use BackedEnum;
 
 use App\Models\Project;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;

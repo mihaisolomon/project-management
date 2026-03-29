@@ -12,6 +12,7 @@ use App\Models\ProjectStatus;
 use App\Models\Ticket;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -48,9 +49,9 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->columns(3)
                             ->schema([
                                 Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
@@ -61,10 +62,10 @@ class ProjectResource extends Resource
                                     )
                                     ->columnSpan(1),
 
-                                Forms\Components\Grid::make()
+                                Schemas\Components\Grid::make()
                                     ->columnSpan(2)
                                     ->schema([
-                                        Forms\Components\Grid::make()
+                                        Schemas\Components\Grid::make()
                                             ->columnSpan(2)
                                             ->columns(12)
                                             ->schema([

@@ -7,6 +7,7 @@ use App\Filament\Resources\TicketPriorityResource\Pages;
 use App\Filament\Resources\TicketPriorityResource\RelationManagers;
 use App\Models\TicketPriority;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -43,9 +44,9 @@ class TicketPriorityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->label(__('Priority name'))

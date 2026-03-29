@@ -6,6 +6,7 @@ use App\Models\Sprint;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -33,7 +34,7 @@ class SprintsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Grid::make()
+                Schemas\Components\Grid::make()
                     ->columns(1)
                     ->visible(fn($record) => !$record)
                     ->extraAttributes([
@@ -48,7 +49,7 @@ class SprintsRelationManager extends RelationManager
                             ))
                     ]),
 
-                Forms\Components\Grid::make()
+                Schemas\Components\Grid::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label(__('Sprint name'))

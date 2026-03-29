@@ -14,6 +14,7 @@ use App\Models\TicketStatus;
 use App\Models\TicketType;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\EditRecord;
@@ -50,9 +51,9 @@ class TicketResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->schema([
                                 Forms\Components\Select::make('project_id')
                                     ->label(__('Project'))
@@ -92,7 +93,7 @@ class TicketResource extends Resource
                                     ->options(function ($get, $set) {
                                         return Epic::where('project_id', $get('project_id'))->pluck('name', 'id')->toArray();
                                     }),
-                                Forms\Components\Grid::make()
+                                Schemas\Components\Grid::make()
                                     ->columns(12)
                                     ->columnSpan(2)
                                     ->schema([
@@ -123,7 +124,7 @@ class TicketResource extends Resource
                                     ->searchable()
                                     ->options(fn() => User::all()->pluck('name', 'id')->toArray()),
 
-                                Forms\Components\Grid::make()
+                                Schemas\Components\Grid::make()
                                     ->columns(3)
                                     ->columnSpan(2)
                                     ->schema([
@@ -181,7 +182,7 @@ class TicketResource extends Resource
                             ->required()
                             ->columnSpan(2),
 
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->columnSpan(2)
                             ->columns(12)
                             ->schema([
@@ -208,7 +209,7 @@ class TicketResource extends Resource
                             ->orderable()
                             ->defaultItems(0)
                             ->schema([
-                                Forms\Components\Grid::make()
+                                Schemas\Components\Grid::make()
                                     ->columns(3)
                                     ->schema([
                                         Forms\Components\Select::make('type')

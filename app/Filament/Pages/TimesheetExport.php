@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages;
 
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\Page;

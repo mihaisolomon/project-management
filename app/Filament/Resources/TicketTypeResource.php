@@ -7,6 +7,7 @@ use App\Filament\Resources\TicketTypeResource\Pages;
 use App\Filament\Resources\TicketTypeResource\RelationManagers;
 use App\Models\TicketType;
 use Filament\Forms;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
@@ -42,9 +43,9 @@ class TicketTypeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make()
+                Schemas\Components\Section::make()
                     ->schema([
-                        Forms\Components\Grid::make()
+                        Schemas\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
                                     ->label(__('Type name'))
