@@ -1,7 +1,7 @@
 @php($record = $this->record)
 <x-filament::page>
 
-    <a href="{{ route('filament.admin.pages.kanban/{project}', ['project' => $record->project->id]) }}"
+    <a href="{{ route('filament.admin.pages.kanban.{project}', ['project' => $record->project->id]) }}"
        class="flex items-center gap-1 text-gray-500 hover:text-gray-700 font-medium text-xs">
         <x-heroicon-o-arrow-left class="w-4 h-4"/> {{ __('Back to kanban board') }}
     </a>

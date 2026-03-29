@@ -260,9 +260,9 @@ class ProjectResource extends Resource
                         ->color('gray')
                         ->url(function ($record) {
                             if ($record->type === 'scrum') {
-                                return route('filament.admin.pages.scrum/{project}', ['project' => $record->id]);
+                                return route('filament.admin.pages.scrum.{project}', ['project' => $record->id]);
                             } else {
-                                return route('filament.admin.pages.kanban/{project}', ['project' => $record->id]);
+                                return route('filament.admin.pages.kanban.{project}', ['project' => $record->id]);
                             }
                         }),
                 ])->color('gray'),
