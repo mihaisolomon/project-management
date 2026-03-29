@@ -4,6 +4,8 @@ namespace App\Livewire\Ticket;
 
 use App\Models\Ticket;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -16,9 +18,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
-class Attachments extends Component implements HasForms, HasTable
+class Attachments extends Component implements HasActions, HasForms, HasTable
 {
-    use InteractsWithForms, InteractsWithTable;
+    use InteractsWithActions, InteractsWithForms, InteractsWithTable;
 
     public Ticket $ticket;
 
