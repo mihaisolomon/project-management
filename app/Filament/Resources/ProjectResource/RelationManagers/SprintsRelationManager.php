@@ -13,6 +13,7 @@ use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
+use Filament\Actions;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\HtmlString;
@@ -125,10 +126,10 @@ class SprintsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\Action::make('start')
+                Actions\Action::make('start')
                     ->label(__('Start sprint'))
                     ->visible(fn($record) => !$record->started_at && !$record->ended_at)
                     ->requiresConfirmation()
@@ -166,7 +167,7 @@ class SprintsRelationManager extends RelationManager
                             ->send();
                     }),
 
-                Tables\Actions\Action::make('stop')
+                Actions\Action::make('stop')
                     ->label(__('Stop sprint'))
                     ->visible(fn($record) => $record->started_at && !$record->ended_at)
                     ->requiresConfirmation()
@@ -184,7 +185,7 @@ class SprintsRelationManager extends RelationManager
                             ->send();
                     }),
 
-                Tables\Actions\Action::make('tickets')
+                Actions\Action::make('tickets')
                     ->label(__('Tickets'))
                     ->color('gray')
                     ->icon('heroicon-o-ticket')
@@ -235,11 +236,11 @@ class SprintsRelationManager extends RelationManager
                             ->send();
                     }),
 
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
             ])
             ->defaultSort('id');
     }

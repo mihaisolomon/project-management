@@ -19,6 +19,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
+use Filament\Actions;
 use Filament\Tables;
 use Illuminate\Support\HtmlString;
 
@@ -342,11 +343,11 @@ class TicketResource extends Resource
                     ->options(fn() => TicketPriority::all()->pluck('name', 'id')->toArray()),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Actions\ViewAction::make(),
+                Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
             ]);
     }
 

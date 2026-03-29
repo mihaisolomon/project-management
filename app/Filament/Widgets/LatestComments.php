@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\TicketComment;
 use Closure;
 use Filament\Forms\Components\RichEditor;
+use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -82,7 +83,7 @@ class LatestComments extends BaseWidget
                     ->dateTime()
             ])
             ->actions([
-                Tables\Actions\Action::make('view')
+                Actions\Action::make('view')
                     ->label(__('View'))
                     ->icon('heroicon-s-eye')
                     ->color('gray')

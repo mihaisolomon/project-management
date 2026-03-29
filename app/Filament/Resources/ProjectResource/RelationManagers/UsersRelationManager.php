@@ -6,6 +6,7 @@ use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Table;
+use Filament\Actions;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,10 +45,10 @@ class UsersRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
-                Tables\Actions\AttachAction::make()
+                Actions\CreateAction::make(),
+                Actions\AttachAction::make()
                     ->preloadRecordSelect()
-                    ->form(fn (Tables\Actions\AttachAction $action): array => [
+                    ->form(fn (Actions\AttachAction $action): array => [
                         $action->getRecordSelect(),
                         Forms\Components\Select::make('role')
                             ->label(__('User role'))
@@ -58,21 +59,21 @@ class UsersRelationManager extends RelationManager
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                Actions\EditAction::make()
                     ->modalWidth('xl')
-                    ->form(fn (Tables\Actions\EditAction $action): array => [
+                    ->form(fn (Actions\EditAction $action): array => [
                         Forms\Components\Select::make('role')
                             ->label(__('User role'))
                             ->searchable()
                             ->options(fn () => config('system.projects.affectations.roles.list'))
                             ->required(),
                     ]),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\DetachAction::make(),
+                Actions\DeleteAction::make(),
+                Actions\DetachAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-                Tables\Actions\DetachBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
+                Actions\DetachBulkAction::make(),
             ]);
     }
 

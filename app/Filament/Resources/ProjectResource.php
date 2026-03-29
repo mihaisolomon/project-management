@@ -15,6 +15,7 @@ use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
+use Filament\Actions;
 use Filament\Tables;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -210,7 +211,7 @@ class ProjectResource extends Resource
             ])
             ->actions([
 
-                Tables\Actions\Action::make('favorite')
+                Actions\Action::make('favorite')
                     ->label('')
                     ->icon('heroicon-o-star')
                     ->color(fn($record) => auth()->user()->favoriteProjects()
@@ -234,11 +235,11 @@ class ProjectResource extends Resource
                             ->send();
                     }),
 
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Actions\ViewAction::make(),
+                Actions\EditAction::make(),
 
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\Action::make('exportLogHours')
+                Actions\ActionGroup::make([
+                    Actions\Action::make('exportLogHours')
                         ->label(__('Export hours'))
                         ->icon('heroicon-o-arrow-down-tray')
                         ->color('gray')
@@ -249,7 +250,7 @@ class ProjectResource extends Resource
                             ['Content-Type' => 'text/csv']
                         )),
 
-                    Tables\Actions\Action::make('kanban')
+                    Actions\Action::make('kanban')
                         ->label(
                             fn ($record)
                                 => ($record->type === 'scrum' ? __('Scrum board') : __('Kanban board'))
@@ -266,7 +267,7 @@ class ProjectResource extends Resource
                 ])->color('gray'),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Actions\DeleteBulkAction::make(),
             ]);
     }
 
