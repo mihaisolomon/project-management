@@ -115,7 +115,7 @@ class ViewTicket extends ViewRecord
                         ->label(__('Comment'))
                         ->rows(3),
                 ])
-                ->action(function (Collection $records, array $data): void {
+                ->action(function (array $data): void {
                     $value = $data['time'];
                     $comment = $data['comment'];
                     TicketHour::create([
