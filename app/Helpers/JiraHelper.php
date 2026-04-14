@@ -41,6 +41,7 @@ trait JiraHelper
                     $results[] = [
                         'code' => $issue->key,
                         'name' => $issue->fields->summary,
+                        'isEpic' => isset($issue->fields->issuetype) && strtolower($issue->fields->issuetype->name) === 'epic',
                         'data' => $issue
                     ];
                 }

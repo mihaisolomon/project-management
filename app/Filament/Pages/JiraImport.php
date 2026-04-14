@@ -49,6 +49,8 @@ class JiraImport extends Page implements HasForms
     public $selected_tickets;
     public $data = [];
     public $ticketsDataApi;
+    public $epicKeys = [];
+    public $taskKeys = [];
 
     public function mount(): void
     {
@@ -199,6 +201,18 @@ class JiraImport extends Page implements HasForms
                                     ->visible(fn() => $this->loadingTickets)
                                     ->content(__('Loading tickets, please wait...'));
 
+                                if (!$this->loadingTickets && $this->tickets) {
+                                    $fields[] = Placeholder::make('selection_buttons')
+                                        ->hiddenLabel()
+                                        ->content(new HtmlString(
+                                            "<div class='flex items-center gap-2'>"
+                                            . "<button type='button' wire:click='selectAllEpics' class='px-3 py-1.5 rounded-md text-xs font-bold bg-purple-600 text-white shadow-sm hover:bg-purple-700'>" . __('Select All Epics') . "</button>"
+                                            . "<button type='button' wire:click='selectAllTasks' class='px-3 py-1.5 rounded-md text-xs font-bold bg-primary-600 text-white shadow-sm hover:bg-primary-700'>" . __('Select All Tasks') . "</button>"
+                                            . "<button type='button' wire:click='deselectAll' class='px-3 py-1.5 rounded-md text-xs font-bold bg-gray-400 text-white shadow-sm hover:bg-gray-500'>" . __('Deselect All') . "</button>"
+                                            . "</div>"
+                                        ));
+                                }
+
                                 if (!$this->loadingTickets) {
                                     if ($this->tickets) {
                                         foreach ($this->tickets as $projectKey => $ticket) {
@@ -213,9 +227,13 @@ class JiraImport extends Page implements HasForms
                                                 foreach ($ticket['issues'] as $issue) {
                                                     $fields[] = Checkbox::make('data.' . Str::slug($projectKey) . '_' . Str::slug($issue['code']))
                                                         ->label(function () use ($issue) {
+                                                            $epicBadge = !empty($issue['isEpic'])
+                                                                ? "<span class='inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-purple-600 text-white shadow-sm'>EPIC</span> "
+                                                                : '';
                                                             return new HtmlString(
                                                                 "<div class='w-full flex flex-col gap-1'>"
                                                                 . "<div class='w-full flex items-center gap-1'>"
+                                                                . $epicBadge
                                                                 . "<div class='text-gray-700 text-xs font-light'><span class='font-medium uppercase'>" . $issue['code'] . "</span> " . $issue['name'] . "</div>"
                                                                 . "</div>"
                                                                 . "</div>"
@@ -251,8 +269,13 @@ class JiraImport extends Page implements HasForms
         if ($this->data && sizeof($this->data)) {
             $tickets = [];
             foreach (array_keys($this->data) as $item) {
-                $url = $this->ticketsDataApi[$item];
-                $tickets[] = $this->getJiraTicketDetails($this->host, $this->username, $this->token, $url);
+                $url = $this->ticketsDataApi[$item] ?? null;
+                if ($url) {
+                    $ticket = $this->getJiraTicketDetails($this->host, $this->username, $this->token, $url);
+                    if ($ticket) {
+                        $tickets[] = $ticket;
+                    }
+                }
             }
             dispatch(new ImportJiraTicketsJob($tickets, auth()->user()));
             Notification::make()
@@ -278,15 +301,42 @@ class JiraImport extends Page implements HasForms
     public function updateJiraTickets(): void
     {
         $this->ticketsDataApi = [];
+        $this->epicKeys = [];
+        $this->taskKeys = [];
         $client = $this->connectToJira($this->host, $this->username, $this->token);
         $this->tickets = $this->getJiraTicketsByProject($client, $this->selected_projects);
         if ($this->tickets) {
             foreach ($this->tickets as $projectKey => $ticket) {
                 foreach ($ticket['issues'] as $issue) {
-                    $this->ticketsDataApi[Str::slug($projectKey) . '_' . Str::slug($issue['code'])] = $issue['data']->self;
+                    $key = Str::slug($projectKey) . '_' . Str::slug($issue['code']);
+                    $this->ticketsDataApi[$key] = $issue['data']->self;
+                    if (!empty($issue['isEpic'])) {
+                        $this->epicKeys[] = $key;
+                    } else {
+                        $this->taskKeys[] = $key;
+                    }
                 }
             }
         }
         $this->loadingTickets = false;
+    }
+
+    public function selectAllEpics(): void
+    {
+        foreach ($this->epicKeys as $key) {
+            $this->data[$key] = true;
+        }
+    }
+
+    public function selectAllTasks(): void
+    {
+        foreach ($this->taskKeys as $key) {
+            $this->data[$key] = true;
+        }
+    }
+
+    public function deselectAll(): void
+    {
+        $this->data = [];
     }
 }
