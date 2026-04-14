@@ -19,6 +19,7 @@ use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use App\Settings\JiraSettings;
 
 class JiraImport extends Page implements HasForms
 {
@@ -51,7 +52,12 @@ class JiraImport extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill();
+        $settings = app(JiraSettings::class);
+        $this->form->fill([
+            'host' => $settings->host,
+            'username' => $settings->username,
+            'token' => $settings->token,
+        ]);
     }
 
     public static function shouldRegisterNavigation(): bool
@@ -87,7 +93,7 @@ class JiraImport extends Page implements HasForms
                                         'class' => 'bg-primary-500 rounded-lg border border-primary-600 text-white font-medium text-sm py-3 px-4'
                                     ])
                                     ->hiddenLabel()
-                                    ->content(__('Important: Your jira credentials are only used to communicate with jira REST API, and will not be stored in this application')),
+                                    ->content(__('Your Jira credentials are used to communicate with the Jira REST API. They will be saved (with the API token encrypted) so you do not need to re-enter them each time.')),
 
                                 Grid::make()
                                     ->schema([
@@ -109,6 +115,12 @@ class JiraImport extends Page implements HasForms
                                     ]),
                             ])
                             ->afterValidation(function () {
+                                $settings = app(JiraSettings::class);
+                                $settings->host = $this->host;
+                                $settings->username = $this->username;
+                                $settings->token = $this->token;
+                                $settings->save();
+
                                 $this->loadingProjects = true;
                                 $this->dispatch('updateJiraProjects');
                             }),
