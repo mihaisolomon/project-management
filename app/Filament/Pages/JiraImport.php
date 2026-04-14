@@ -110,7 +110,7 @@ class JiraImport extends Page implements HasForms
                             ])
                             ->afterValidation(function () {
                                 $this->loadingProjects = true;
-                                $this->emit('updateJiraProjects');
+                                $this->dispatch('updateJiraProjects');
                             }),
 
                         Wizard\Step::make(__('Jira projects'))
@@ -164,7 +164,7 @@ class JiraImport extends Page implements HasForms
                             ])
                             ->afterValidation(function () {
                                 $this->loadingTickets = true;
-                                $this->emit('updateJiraTickets');
+                                $this->dispatch('updateJiraTickets');
                             }),
 
                         Wizard\Step::make(__('Jira tickets'))
@@ -268,9 +268,11 @@ class JiraImport extends Page implements HasForms
         $this->ticketsDataApi = [];
         $client = $this->connectToJira($this->host, $this->username, $this->token);
         $this->tickets = $this->getJiraTicketsByProject($client, $this->selected_projects);
-        foreach ($this->tickets as $projectKey => $ticket) {
-            foreach ($ticket['issues'] as $issue) {
-                $this->ticketsDataApi[Str::slug($projectKey) . '_' . Str::slug($issue['code'])] = $issue['data']->self;
+        if ($this->tickets) {
+            foreach ($this->tickets as $projectKey => $ticket) {
+                foreach ($ticket['issues'] as $issue) {
+                    $this->ticketsDataApi[Str::slug($projectKey) . '_' . Str::slug($issue['code'])] = $issue['data']->self;
+                }
             }
         }
         $this->loadingTickets = false;
